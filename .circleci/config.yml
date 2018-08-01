@@ -168,7 +168,7 @@ jobs:
         paths:
         - build/*
 
-  build_pre-release:
+  build_snapshot:
     <<: *defaults
     docker:
     # specify the version you desire here
