@@ -1,0 +1,30 @@
+version: '3'
+services:
+  sto2-influxdb:
+    image: influxdb
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+      - "2003:2003"
+    environment:
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_DB=stoxygen_indicator
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=123456
+      - INFLUXDB_USER=sto2
+      - INFLUXDB_USER_PASSWORD=123456
+    networks:
+      - influxdb-net
+
+  sto2-chronograf:
+    image: chronograf
+    ports:
+      - "8888:8888"
+    networks:
+      - influxdb-net
+
+networks:
+  influxdb-net:
+    config:
+      - subnet: 172.30.0.0/24
+    driver: bridge
