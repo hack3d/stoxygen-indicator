@@ -12,7 +12,9 @@ public class StoxygenIndicatorConfiguration {
     @Value("${downloader.url:}")
     private String downloader_url;
 
+
     public String getDownloader_url() {
         return downloader_url;
     }
+
 }

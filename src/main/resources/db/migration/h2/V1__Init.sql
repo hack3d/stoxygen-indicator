@@ -46,6 +46,15 @@ create table indicator_configuration (
     primary key (indicator_configurations_id)
 );
 
+create table macd_data (
+    time timestamp not null,
+    bond_id int not null,
+    exchange_id int not null,
+    signal numeric(10,10) not null,
+    fast_macd numeric(10,10) not null,
+    slow_macd numeric(10,10) not null
+);
+
 alter table indicator_bond_setting add constraint FKd33u58684smdmvnmwejt03ani foreign key (bonds_bonds_id) references bond;
 alter table indicator_bond_setting add constraint FKnfavlct18ekgw52cqwar6kf31 foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration;
 alter table indicator_configuration add constraint FKd8p7ebq4u3p7lhanayao1j8g2 foreign key (indicators_indicators_id) references indicator;

@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/api/v1/aggregatedData/1min/exchange/btsp/isin/XFC000000001/latestTimestamp/([\\d]*)"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [{"insertTimestamp":1535570108000,"modifyTimestamp":1535570108000,"tickdata1MinuteId":1,"open":5995.0,"close":5995.0,"bid":0.0,"ask":0.0,"high":5995.0,"low":5995.0,"volume":0.00884487,"aggregated":false,"timestamp":1535570100000},{"insertTimestamp":1535570238000,"modifyTimestamp":1535570238000,"tickdata1MinuteId":2,"open":5995.0,"close":5995.02,"bid":0.0,"ask":0.0,"high":5995.14,"low":5995.0,"volume":0.597697,"aggregated":false,"timestamp":1535570160000},{"insertTimestamp":1535570290000,"modifyTimestamp":1535570290000,"tickdata1MinuteId":3,"open":5999.99,"close":5999.99,"bid":0.0,"ask":0.0,"high":5999.99,"low":5999.99,"volume":0.0166443,"aggregated":false,"timestamp":1535570280000},{"insertTimestamp":1535570347000,"modifyTimestamp":1535570347000,"tickdata1MinuteId":4,"open":5995.01,"close":5999.99,"bid":0.0,"ask":0.0,"high":5999.99,"low":5995.01,"volume":1.58957,"aggregated":false,"timestamp":1535570340000},{"insertTimestamp":1535570469000,"modifyTimestamp":1535570469000,"tickdata1MinuteId":5,"open":5995.01,"close":5999.99,"bid":0.0,"ask":0.0,"high":5999.99,"low":5995.01,"volume":0.0183579,"aggregated":false,"timestamp":1535570400000},{"insertTimestamp":1535570529000,"modifyTimestamp":1535570529000,"tickdata1MinuteId":6,"open":5999.99,"close":5999.97,"bid":0.0,"ask":0.0,"high":5999.99,"low":5999.97,"volume":1.2486,"aggregated":false,"timestamp":1535570520000},{"insertTimestamp":1535570599000,"modifyTimestamp":1535570599000,"tickdata1MinuteId":7,"open":5999.97,"close":5999.99,"bid":0.0,"ask":0.0,"high":5999.99,"low":5999.97,"volume":0.144217,"aggregated":false,"timestamp":1535570580000},{"insertTimestamp":1535570734000,"modifyTimestamp":1535570734000,"tickdata1MinuteId":8,"open":5999.97,"close":5999.97,"bid":0.0,"ask":0.0,"high":5999.98,"low":5995.0,"volume":15.2525,"aggregated":false,"timestamp":1535570640000},{"insertTimestamp":1535570782000,"modifyTimestamp":1535570782000,"tickdata1MinuteId":9,"open":5995.0,"close":5999.99,"bid":0.0,"ask":0.0,"high":5999.99,"low":5995.0,"volume":0.0148205,"aggregated":false,"timestamp":1535570760000},{"insertTimestamp":1535570831000,"modifyTimestamp":1535570831000,"tickdata1MinuteId":10,"open":5995.1,"close":5995.1,"bid":0.0,"ask":0.0,"high":5995.1,"low":5995.1,"volume":0.001668,"aggregated":false,"timestamp":1535570820000}],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
