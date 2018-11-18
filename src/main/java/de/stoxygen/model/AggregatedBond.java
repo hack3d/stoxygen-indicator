@@ -1,5 +1,7 @@
 package de.stoxygen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class AggregatedBond {
@@ -12,6 +14,7 @@ public class AggregatedBond {
     private Float high;
     private Float low;
     private Float volume;
+    @JsonIgnore
     private Boolean aggregated;
     private Date insertTimestamp;
     private Date modifyTimestamp;

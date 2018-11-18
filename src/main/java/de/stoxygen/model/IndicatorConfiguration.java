@@ -32,4 +32,13 @@ public class IndicatorConfiguration extends Auditable<String>  {
     public Indicator getIndicators() {
         return indicators;
     }
+
+    public void addIndicator(Indicator indicator) {
+        this.indicators = indicator;
+    }
+
+    @PrePersist
+    public void setIndicatorConfigurationName() {
+        this.indicatorConfigurationName = UUID.randomUUID();
+    }
 }

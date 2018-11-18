@@ -41,6 +41,7 @@ public abstract class Auditable<U> {
         Date now = new Date();
         this.insertTimestamp = now;
         this.modifyTimestamp = now;
+
     }
 
     @PreUpdate

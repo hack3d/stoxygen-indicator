@@ -39,4 +39,20 @@ public class IndicatorBondSetting extends Auditable<String> {
     public IndicatorConfiguration getIndicatorConfiguration() {
         return indicatorConfiguration;
     }
+
+    public void addBond(Bond bond) {
+        this.bonds = bond;
+    }
+
+    public void addIndicatorConfiguration(IndicatorConfiguration indicatorConfiguration) {
+        this.indicatorConfiguration = indicatorConfiguration;
+    }
+
+    public void setIndicatorKey(String indicatorKey) {
+        this.indicatorKey = indicatorKey;
+    }
+
+    public void setIndicatorValue(String indicatorValue) {
+        this.indicatorValue = indicatorValue;
+    }
 }

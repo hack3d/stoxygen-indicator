@@ -29,4 +29,12 @@ public class Indicator extends Auditable<String> {
         return indicatorSymbol;
     }
 
+    public void setIndicatorName(String indicatorName) {
+        this.indicatorName = indicatorName;
+    }
+
+    public void setIndicatorSymbol(String indicatorSymbol) {
+        this.indicatorSymbol = indicatorSymbol;
+    }
+
 }

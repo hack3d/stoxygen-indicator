@@ -1,6 +1,8 @@
 package de.stoxygen.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bond extends Auditable<String> {
@@ -21,7 +23,14 @@ public class Bond extends Auditable<String> {
     @Column(nullable = false)
     private String cryptoPair;
 
+    @ManyToMany(mappedBy = "bonds", fetch = FetchType.EAGER)
+    private Set<Exchange> exchanges = new HashSet<>();
+
     public Bond() {}
+
+    public Set<Exchange> getExchanges() {
+        return exchanges;
+    }
 
     public Integer getBondsId() {
         return bondsId;

@@ -1,29 +1,31 @@
 package de.stoxygen.model;
 
-import javax.persistence.*;
+import org.springframework.data.redis.core.RedisHash;
+
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class MacdData extends Auditable<String> {
+/**
+ * Model for REDIS data
+ */
+@RedisHash("MacdData")
+public class MacdData implements Serializable {
 
     @Id
-    @Column(nullable = false)
+    private String id;
+
     private Date time;
 
-    @Column(nullable = false)
     private Integer exchangeId;
 
-    @Column(nullable = false)
+    private String bondIsin;
+
     private Float macdSignal;
 
-    @Column(nullable = false)
     private Float fastMacd;
 
-    @Column(nullable = false)
     private Float slowMacd;
-
-    @ManyToOne
-    private Bond bonds;
 
     public MacdData() {}
 

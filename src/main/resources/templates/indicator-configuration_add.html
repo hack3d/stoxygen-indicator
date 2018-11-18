@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Stoxygen - Downloader</title>
+    <link rel="stylesheet" href="/bootstrap-4.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/sticky-footer-navbar/sticky-footer-navbar.css" />
+    <link rel="stylesheet" href="/font_awesome-5.1.0/css/fontawesome-all.min.css" />
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/bootstrap-4.1.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // At first we disable all input fields
+            $('#macdFast').hide();
+            $('#inputMacdFast').hide();
+            $('#macdSlow').hide();
+            $('#inputMacdSlow').hide();
+            $('#bbAvg').hide();
+            $('#inputBbAvg').hide();
+
+
+            $('select[name="indicatorsId"]').change(function() {
+                if($('select[name="indicatorsId"]').val() == "1") {
+                    // MACD
+                    // enable
+                    $('#macdFast').show();
+                    $('#inputMacdFast').show();
+                    $('#macdSlow').show();
+                    $('#inputMacdSlow').show();
+
+                    // disable
+                    $('#bbAvg').hide();
+                    $('#inputBbAvg').hide();
+                }
+
+                if($('select[name="indicatorsId"]').val() == "2") {
+                    // Bollinger Bands
+                    // enable
+                    $('#bbAvg').show();
+                    $('#inputBbAvg').show();
+
+                    // disable
+                    $('#macdFast').hide();
+                    $('#inputMacdFast').hide();
+                    $('#macdSlow').hide();
+                    $('#inputMacdSlow').hide();
+                }
+
+                if($('select[name="indicatorsId"]').val() == "0") {
+                    // Default - We hide all
+                    $('#macdFast').hide();
+                    $('#macdSlow').hide();
+                    $('#bbAvg').hide();
+                    $('#inputMacdFast').hide();
+                    $('#inputMacdSlow').hide();
+                    $('#inputBbAvg').hide();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<header>
+    <th:block layout:replace="fragments/navigation" />
+</header>
+<main class="container" role="main">
+    <h2 th:text="${title}"></h2>
+    <form th:action="@{/bond/{isin}/indicator-configuration/add(isin=${isin})}" th:object="${addIndicatorBondConfigurationForm}" method="post">
+        <div class="form-group row">
+            <label for="inputIndicator" class="col-2 col-form-label" th:text="#{inputIndicator}">Text...</label>
+            <div class="col-10">
+                <select id="inputIndicator" class="form-control" th:field="*{indicatorsId}" name="indicatorsId">
+                    <option value="0" th:text="#{please-select}"></option>
+                    <option th:each="indicator : ${indicators}" th:value="${indicator.indicatorsId}" th:text="${indicator.indicatorName}">Text...</option>
+                </select>
+            </div>
+        </div>
+        <div id="macdFast" class="form-group row">
+            <label for="inputMacdFast" class="col-2 col-form-label" th:text="#{inputMacdFast}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputMacdFast" th:field="*{macdFast}" />
+            </div>
+        </div>
+        <div id="macdSlow" class="form-group row">
+            <label for="inputMacdSlow" class="col-2 col-form-label" th:text="#{inputMacdSlow}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputMacdSlow" th:field="*{macdSlow}" />
+            </div>
+        </div>
+        <div id="bbAvg" class="form-group row">
+            <label for="inputBbAvg" class="col-2 col-form-label" th:text="#{inputBbAvg}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputBbAvg" th:field="*{bbAvg}" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Save</button>
+    </form>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        (c) 2018 Stoxygen GmbH
+    </div>
+</footer>
+</body>
+</html>

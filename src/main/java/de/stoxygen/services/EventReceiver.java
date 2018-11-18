@@ -75,7 +75,15 @@ public class EventReceiver {
                             for (String g : indicators) {
                                 logger.info("Indicator {} has to be calculate.", g);
                                 if (g.equals("macd")) {
-                                    Future<MACDIndicator> macd = indicatorService.calculateMacd(data, 9, 12, 26);
+                                    // Get settings for indicator macd
+                                    IndicatorBondSetting macd_setting1 = indicatorBondSettingRepository.findByIndicatorKeyAndBonds("macdFast", bond);
+                                    IndicatorBondSetting macd_setting2 = indicatorBondSettingRepository.findByIndicatorKeyAndBonds("macdSlow", bond);
+
+                                    Integer macdFast = Integer.valueOf(macd_setting1.getIndicatorValue());
+                                    Integer macdSlow = Integer.valueOf(macd_setting2.getIndicatorValue());
+
+
+                                    Future<MACDIndicator> macd = indicatorService.calculateMacd(data, 9, macdFast, macdSlow);
                                     while(!macd.isDone()) {
                                         logger.debug("MACD calculation is not finished yet! Waiting...");
                                     }

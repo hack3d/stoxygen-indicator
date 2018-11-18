@@ -12,4 +12,6 @@ import java.util.List;
 public interface BondRepository extends CrudRepository<Bond, Integer> {
     List<Bond> findByBondIsin(String bondIsin);
 
+    Bond findFirstByBondIsin(String bondIsin);
+
 }

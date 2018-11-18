@@ -12,4 +12,5 @@ import java.util.List;
 @Transactional
 public interface IndicatorBondSettingRepository extends CrudRepository<IndicatorBondSetting, Integer> {
     List<IndicatorBondSetting> findByBonds(Bond bonds);
+    IndicatorBondSetting findByIndicatorKeyAndBonds(String indicatorKey, Bond bonds);
 }

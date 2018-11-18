@@ -5,3 +5,7 @@ Calculate technical indicators and store the result. You can decide which indica
 
 ## Development
 For Development all required systems are in the docker-compose.yml and can be started with `docker-compose up`.
+
+## Mock
+The data for the mock-service are from cryptocpmare.com (https://www.cryptocompare.com/api/#-api-data-histominute-). 
+So we should use this data also for the unit tests. 

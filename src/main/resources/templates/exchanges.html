@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Stoxygen - Indicator</title>
+    <link rel="stylesheet" href="/bootstrap-4.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/sticky-footer-navbar/sticky-footer-navbar.css" />
+    <link rel="stylesheet" href="/font_awesome-5.1.0/css/fontawesome-all.min.css" />
+</head>
+<body>
+<header>
+    <th:block layout:replace="fragments/navigation" />
+</header>
+<main class="container" role="main">
+    <h2 th:text="${title}">Text...</h2>
+    <div th:if="${not #lists.isEmpty(exchanges)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Symbol</th>
+                <th scope="col">Countrycode</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="exchange : ${exchanges}">
+                <td><a th:href="@{/exchange/{symbol}/bonds(symbol=${exchange.symbol})}" th:text="${exchange.exchangesId}">Text ...</a></td>
+                <td th:text="${exchange.name}">Text ...</td>
+                <td th:text="${exchange.symbol}">Text ...</td>
+                <td th:text="${exchange.countryCode}">Text ...</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        (c) 2018 Stoxygen GmbH
+    </div>
+</footer>
+<script src="/jquery/jquery-3.3.1.min.js"></script>
+<script src="/bootstrap-4.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
