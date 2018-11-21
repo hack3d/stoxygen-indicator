@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -54,9 +55,11 @@ public class BondController {
     @RequestMapping(value = "/bond/{isin}", method = RequestMethod.GET)
     public String getBondByExchangeAndIndicator(@PathVariable(value = "isin") String isin, Model model) {
         Bond bond = bondRepository.findFirstByBondIsin(isin);
+        List<IndicatorBondSetting> indicatorBondSetting = indicatorBondSettingRepository.findByBonds(bond);
         model.addAttribute("title", bond.getBondName());
         model.addAttribute("bond", bond);
         model.addAttribute("exchanges", bond.getExchanges());
+        model.addAttribute("indicators", indicatorBondSetting);
 
         return "bond_detail";
     }

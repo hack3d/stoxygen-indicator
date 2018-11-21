@@ -1,51 +1,81 @@
 package de.stoxygen.model;
 
-import org.springframework.data.redis.core.RedisHash;
-
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
-/**
- * Model for REDIS data
- */
-@RedisHash("MacdData")
-public class MacdData implements Serializable {
+
+@Entity
+public class MacdData extends Auditable<String> {
 
     @Id
-    private String id;
+    @Column
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer macdDataId;
 
-    private Date time;
+    @Column(nullable = false)
+    private Date timestamp;
 
-    private Integer exchangeId;
-
-    private String bondIsin;
-
+    @Column
     private Float macdSignal;
 
-    private Float fastMacd;
+    @Column(nullable = false)
+    private Float macdDataPoint;
 
-    private Float slowMacd;
+    @Column(nullable = false)
+    private String aggregate;
+
+
+    @ManyToOne
+    private IndicatorConfiguration indicatorConfiguration;
 
     public MacdData() {}
 
-    public Date getTime() {
-        return time;
+    public MacdData(Date timestamp, Float macdDataPoint) {
+        this.timestamp = timestamp;
+        this.macdDataPoint = macdDataPoint;
     }
 
-    public Integer getExchangeId() {
-        return exchangeId;
+    public MacdData(ZonedDateTime timestamp, Float macdDataPoint, IndicatorConfiguration indicatorConfiguration, String aggregate) {
+        this.macdDataPoint = macdDataPoint;
+        this.timestamp = Date.from(timestamp.toInstant());
+        this.indicatorConfiguration = indicatorConfiguration;
+        this.aggregate = aggregate;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
     }
 
     public Float getMacdSignal() {
         return macdSignal;
     }
 
-    public Float getFastMacd() {
-        return fastMacd;
+    public Float getMacdDataPoint() {
+        return macdDataPoint;
     }
 
-    public Float getSlowMacd() {
-        return slowMacd;
+    public String getAggregate() {
+        return aggregate;
+    }
+
+    public void addIndicatorConfiguration(IndicatorConfiguration indicatorConfiguration) {
+        this.indicatorConfiguration = indicatorConfiguration;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setMacdSignal(Float macdSignal) {
+        this.macdSignal = macdSignal;
+    }
+
+    public void setMacdDataPoint(Float macdDataPoint) {
+        this.macdDataPoint = macdDataPoint;
+    }
+
+    public void setAggregate(String aggregate) {
+        this.aggregate = aggregate;
     }
 }

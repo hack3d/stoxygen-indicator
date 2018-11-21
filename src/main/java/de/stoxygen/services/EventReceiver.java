@@ -3,12 +3,10 @@ package de.stoxygen.services;
 import com.rabbitmq.client.Channel;
 import de.stoxygen.RestfulClient;
 import de.stoxygen.configuration.StoxygenIndicatorConfiguration;
-import de.stoxygen.model.AggregatedBond;
-import de.stoxygen.model.Bond;
-import de.stoxygen.model.IndicatorBondSetting;
-import de.stoxygen.model.IndicatorCalculateMessage;
+import de.stoxygen.model.*;
 import de.stoxygen.repository.BondRepository;
 import de.stoxygen.repository.IndicatorBondSettingRepository;
+import de.stoxygen.repository.MacdDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -46,6 +44,9 @@ public class EventReceiver {
         @Autowired
         private IndicatorService indicatorService;
 
+        @Autowired
+        private MacdDataRepository macdDataRepository;
+
 
         @RabbitListener(queues = "indicatorQueue")
         public void receiveMessage(final IndicatorCalculateMessage message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
@@ -62,41 +63,66 @@ public class EventReceiver {
                         List<Bond> bondList = bondRepository.findByBondIsin(message.getBond());
                         for (Bond bond : bondList) {
                             List<IndicatorBondSetting> indicatorBondSettingList = indicatorBondSettingRepository.findByBonds(bond);
-                            ArrayList<String> indicators = new ArrayList<>();
-                            for (IndicatorBondSetting indicatorBondSetting : indicatorBondSettingList) {
-                                if (indicators.contains(indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorSymbol())) {
-                                    logger.info("We already found indicator {} for bond {}", indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorName(), bond.getBondIsin());
-                                } else {
-                                    logger.info("Add indicator {} to list", indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorName());
-                                    indicators.add(indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorSymbol());
-                                }
-                            }
-
-                            for (String g : indicators) {
-                                logger.info("Indicator {} has to be calculate.", g);
-                                if (g.equals("macd")) {
-                                    // Get settings for indicator macd
-                                    IndicatorBondSetting macd_setting1 = indicatorBondSettingRepository.findByIndicatorKeyAndBonds("macdFast", bond);
-                                    IndicatorBondSetting macd_setting2 = indicatorBondSettingRepository.findByIndicatorKeyAndBonds("macdSlow", bond);
-
-                                    Integer macdFast = Integer.valueOf(macd_setting1.getIndicatorValue());
-                                    Integer macdSlow = Integer.valueOf(macd_setting2.getIndicatorValue());
-
-
-                                    Future<MACDIndicator> macd = indicatorService.calculateMacd(data, 9, macdFast, macdSlow);
-                                    while(!macd.isDone()) {
-                                        logger.debug("MACD calculation is not finished yet! Waiting...");
-                                    }
-                                    logger.info("Finished calculate {}", g);
-                                    for(int i=0; i < macd.get().getTimeSeries().getBarCount(); i++) {
-                                        logger.debug("MACD[Count: {}; Value: {}]", i, macd.get().getValue(i));
+                            logger.debug("Found {} settings.", indicatorBondSettingList.size());
+                            if (indicatorBondSettingList.size() > 0) {
+                                ArrayList<String> indicators = new ArrayList<>();
+                                for (IndicatorBondSetting indicatorBondSetting : indicatorBondSettingList) {
+                                    if (indicators.contains(indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorSymbol())) {
+                                        logger.info("We already found indicator {} for bond {}", indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorName(), bond.getBondIsin());
+                                    } else {
+                                        logger.info("Add indicator {} to list", indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorName());
+                                        indicators.add(indicatorBondSetting.getIndicatorConfiguration().getIndicators().getIndicatorSymbol());
                                     }
                                 }
+
+                                for (String g : indicators) {
+                                    logger.info("Indicator {} has to be calculate.", g);
+                                    if (g.equals("macd")) {
+                                        // Get settings for indicator macd
+                                        IndicatorBondSetting macd_setting1 = indicatorBondSettingRepository.
+                                                findByIndicatorKeyAndBonds("macdFast", bond);
+                                        IndicatorBondSetting macd_setting2 = indicatorBondSettingRepository.
+                                                findByIndicatorKeyAndBonds("macdSlow", bond);
+
+                                        Integer macdFast = Integer.valueOf(macd_setting1.getIndicatorValue());
+                                        Integer macdSlow = Integer.valueOf(macd_setting2.getIndicatorValue());
+
+
+                                        Future<MACDIndicator> macd = indicatorService.calculateMacd(data, 9,
+                                                macdFast, macdSlow);
+                                        while (!macd.isDone()) {
+                                            logger.debug("MACD calculation is not finished yet! Waiting...");
+                                        }
+
+                                        logger.info("Finished calculate {}", g);
+                                        ArrayList<MacdData> macdDataArrayList = new ArrayList<>();
+
+                                        for (int i = 0; i < macd.get().getTimeSeries().getBarCount(); i++) {
+                                            logger.debug("MACD[Count: {}; Value: {}; Time: {}]", i,
+                                                    macd.get().getValue(i),
+                                                    macd.get().getTimeSeries().getBar(i).getBeginTime());
+                                            macdDataArrayList.add(new MacdData(
+                                                    macd.get().getTimeSeries().getBar(i).getBeginTime(),
+                                                    macd.get().getValue(i).floatValue(),
+                                                    macd_setting1.getIndicatorConfiguration(), message.getAggregate()));
+                                        }
+
+                                        if(macdDataArrayList.size() > 0) {
+                                            logger.debug("There are some values to save!");
+                                            macdDataRepository.save(macdDataArrayList);
+                                        }
+                                    }
+                                    logger.info("Acknowledge message on queue.");
+                                    channel.basicAck(tag, true);
+                                }
+                            } else {
+                                logger.info("No indicator setting for bond {} found.", message.getBond());
                                 channel.basicAck(tag, true);
                             }
                         }
                     } else {
-                        logger.warn("No data found for bond: {}, timestamp: {}, aggregate: {}", message.getBond(), message.getTimestamp(), message.getAggregate());
+                        logger.warn("No data found for bond: {}, timestamp: {}, aggregate: {}", message.getBond(),
+                                message.getTimestamp(), message.getAggregate());
                         channel.basicAck(tag, true);
                     }
                 }

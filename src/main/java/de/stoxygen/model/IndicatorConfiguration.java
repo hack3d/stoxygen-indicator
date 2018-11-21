@@ -13,9 +13,9 @@ public class IndicatorConfiguration extends Auditable<String>  {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer indicatorConfigurationsId;
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(nullable = false, columnDefinition = "BINARY(16)")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(nullable = false)
     private UUID indicatorConfigurationName;
 
     @ManyToOne
@@ -37,6 +37,7 @@ public class IndicatorConfiguration extends Auditable<String>  {
         this.indicators = indicator;
     }
 
+    // We need this to generate a uuid before we save the object to database.
     @PrePersist
     public void setIndicatorConfigurationName() {
         this.indicatorConfigurationName = UUID.randomUUID();

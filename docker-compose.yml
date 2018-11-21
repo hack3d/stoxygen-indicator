@@ -14,24 +14,15 @@ services:
     ports:
       - "15673:15672"
       - "5673:5672"
-  sto2-mysql:
-    image: mysql:5.7
+  sto2-postgres:
+    image: postgres:10.6
     ports:
-      - "3307:3306"
+      - "5433:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: stoxygen_indicator
-      MYSQL_USER: sto2-indicator
-      MYSQL_PASSWORD: 1234560
+      POSTGRES_USER: sto2-indicator
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: sto2_indicator
   sto2-adminer:
     image: adminer:4.6.3-standalone
     ports:
       - "8081:8080"
-  sto2-redis:
-    image: redis:5.0.1-stretch
-    ports:
-      - "6379:6379"
-
-
-
-

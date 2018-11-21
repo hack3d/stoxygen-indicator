@@ -40,6 +40,10 @@ public class IndicatorBondSetting extends Auditable<String> {
         return indicatorConfiguration;
     }
 
+    public Bond getBonds() {
+        return bonds;
+    }
+
     public void addBond(Bond bond) {
         this.bonds = bond;
     }

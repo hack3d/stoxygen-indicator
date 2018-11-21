@@ -13,9 +13,11 @@ import org.ta4j.core.TimeSeries;
 import org.ta4j.core.indicators.MACDIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -27,6 +29,7 @@ public class IndicatorService {
     public Future<MACDIndicator> calculateMacd(List<AggregatedBond> data, Integer signal, Integer fast_macd, Integer slow_macd) {
         List<Bar> bars = new ArrayList<>();
         for (AggregatedBond aggregatedBond : data) {
+            logger.debug("Raw data[Date: {}, Open: {}, Close: {}]", aggregatedBond.getInsertTimestamp(), aggregatedBond.getOpen(), aggregatedBond.getClose());
             ZonedDateTime d = ZonedDateTime.from(aggregatedBond.getInsertTimestamp().toInstant().atZone(ZoneId.of("UTC")));
             Double open = Double.valueOf(aggregatedBond.getOpen().toString());
             Double high = Double.valueOf(aggregatedBond.getHigh().toString());
@@ -35,7 +38,7 @@ public class IndicatorService {
             Double volume = Double.valueOf(aggregatedBond.getVolume().toString());
 
             bars.add(new BaseBar(d, open, high, low, close, volume));
-            logger.debug("BarData[Open: {}, High: {}, Low: {}, Close: {}, Volume: {}", open, high, low, close, volume);
+            logger.debug("BarData[Open: {}, High: {}, Low: {}, Close: {}, Volume: {}, Date: {}", open, high, low, close, volume, d);
         }
         TimeSeries series = new BaseTimeSeries("test", bars);
         logger.debug("TimeSeries[{}]", series.getBarCount());
