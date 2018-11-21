@@ -103,12 +103,11 @@ jobs:
     docker:
     # specify the version you desire here
     - image: circleci/openjdk:8-jdk
-    - image: circleci/mysql:5.7.21
+    - image: circleci/postgres:10.6
       environment:
-        MYSQL_DATABASE: "stoxygen_indicator"
-        MYSQL_ROOT_HOST: "%"
-        MYSQL_USER: "sto2-indicator"
-        MYSQL_PASSWORD: "123456"
+        POSTGRES_USER: sto2-indicator
+        POSTGRES_PASSWORD: 123456
+        POSTGRES_DB: sto2_indicator
     - image: rabbitmq:3.6-alpine
       ports:
       - "5672:5672"
@@ -145,11 +144,11 @@ jobs:
     - run:
         name: Build application
         environment:
-          SPRING_DATASOURCE_URL: "jdbc:mysql://localhost:3306/stoxygen_indicator?useSSL=false"
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/sto2_indicator"
           SPRING_DATASOURCE_USERNAME: "sto2-indicator"
           SPRING_DATASOURCE_PASSWORD: "123456"
           FLYWAY_LOCATIONS: "db/migration/{vendor}/"
-          SPRING_JPA_PROPTERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.MySQL5InnoDBDialect"
+          SPRING_JPA_PROPTERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
           SPRING_JPA_HIBERNATE_DDL-AUTO: "validate"
           SPRING_RABBITMQ_HOST: "localhost"
           SPRING_RABBITMQ_PORT: "5672"
@@ -173,12 +172,11 @@ jobs:
     docker:
     # specify the version you desire here
     - image: circleci/openjdk:8-jdk
-    - image: circleci/mysql:5.7.21
+    - image: circleci/postgres:10.6
       environment:
-        MYSQL_DATABASE: "stoxygen_indicator"
-        MYSQL_ROOT_HOST: "%"
-        MYSQL_USER: "sto2-indicator"
-        MYSQL_PASSWORD: "123456"
+        POSTGRES_USER: sto2-indicator
+        POSTGRES_PASSWORD: 123456
+        POSTGRES_DB: sto2_indicator
     - image: rabbitmq:3.6-alpine
       ports:
       - "5672:5672"
@@ -215,11 +213,11 @@ jobs:
     - run:
         name: Build application
         environment:
-          SPRING_DATASOURCE_URL: "jdbc:mysql://localhost:3306/stoxygen_indicator?useSSL=false"
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/sto2_indicator"
           SPRING_DATASOURCE_USERNAME: "sto2-indicator"
           SPRING_DATASOURCE_PASSWORD: "123456"
           FLYWAY_LOCATIONS: "db/migration/{vendor}/"
-          SPRING_JPA_PROPTERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.MySQL5InnoDBDialect"
+          SPRING_JPA_PROPTERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
           SPRING_JPA_HIBERNATE_DDL-AUTO: "validate"
           SPRING_RABBITMQ_HOST: "localhost"
           SPRING_RABBITMQ_PORT: "5672"
