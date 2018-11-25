@@ -37,9 +37,15 @@ jobs:
     - run:
         name: Push to DockerHub
         command: |
+          wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64
+          chmod +x manifest-tool-linux-amd64
           export GIT_COMMIT=$(git rev-parse --short HEAD)
           docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
-          docker push stockanalyses/indicator_arm32v7:$GIT_COMMIT
+          docker push stockanalyses/indicator:armhf-$GIT_COMMIT
+          sed -i "s|{image}|indicator|g" manifest.yaml
+          sed -i "s|{tag}|armhf-$GIT_COMMIT|g" manifest.yaml
+          sed -i "s|{majmin}|armhf-$GIT_COMMIT|g" manifest.yaml
+          ./manifest-tool-linux-amd64 push from-spec manifest.yaml
   docker_snapshot_amd64:
     <<: *defaults
     machine: true
