@@ -23,8 +23,8 @@ public class EventReceiverConfiguration implements RabbitListenerConfigurer {
     }
 
     @Bean
-    public BindingBuilder.GenericArgumentsConfigurer binding(Queue queue, Exchange evenExchange) {
-        return BindingBuilder.bind(queue).to(evenExchange).with("indicator.*");
+    public Binding binding(Queue queue, TopicExchange evenExchange) {
+        return BindingBuilder.bind(queue).to(evenExchange).with("indicator.calculate");
     }
 
     @Bean
