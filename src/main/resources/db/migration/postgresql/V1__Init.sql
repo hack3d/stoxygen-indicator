@@ -79,9 +79,53 @@ create table macd_data (
     primary key (macd_data_id)
 );
 
+create table adx_data (
+    adx_data_id  bigserial not null,
+    insert_timestamp timestamp,
+    insert_user varchar(255),
+    modify_timestamp timestamp,
+    modify_user varchar(255),
+    adx_data_point float4 not null,
+    aggregate varchar(255) not null,
+    timestamp timestamp not null,
+    indicator_configuration_indicator_configurations_id int4,
+    primary key (adx_data_id)
+);
+
+create table atr_data (
+    atr_data_id  bigserial not null,
+    insert_timestamp timestamp,
+    insert_user varchar(255),
+    modify_timestamp timestamp,
+    modify_user varchar(255),
+    aggregate varchar(255) not null,
+    atr_data_point float4 not null,
+    timestamp timestamp not null,
+    indicator_configuration_indicator_configurations_id int4,
+    primary key (atr_data_id)
+);
+
+create table rsi_data (
+    rsi_data_id  bigserial not null,
+    insert_timestamp timestamp,
+    insert_user varchar(255),
+    modify_timestamp timestamp,
+    modify_user varchar(255),
+    aggregate varchar(255) not null,
+    rsi_data_point float4 not null,
+    timestamp timestamp not null,
+    indicator_configuration_indicator_configurations_id int4,
+    primary key (rsi_data_id)
+);
+
+
 alter table exchange_bonds add constraint FKm5a9ds39gckypvgescolen53h foreign key (bonds_bonds_id) references bond (bonds_id);
 alter table exchange_bonds add constraint FK6yy0ft6s7anj8loeb0g0310p9 foreign key (exchanges_exchanges_id) references exchange (exchanges_id);
 alter table indicator_bond_setting add constraint FKd33u58684smdmvnmwejt03ani foreign key (bonds_bonds_id) references bond (bonds_id);
 alter table indicator_bond_setting add constraint FKnfavlct18ekgw52cqwar6kf31 foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration (indicator_configurations_id);
 alter table indicator_configuration add constraint FKd8p7ebq4u3p7lhanayao1j8g2 foreign key (indicators_indicators_id) references indicator (indicators_id);
 alter table macd_data add constraint FKnhjtipo8tfc0kf5930tg3kbu2 foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration (indicator_configurations_id);
+alter table adx_data add constraint FKme9k3mn1l9b9h0snlryywsukm foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration (indicator_configurations_id);
+alter table atr_data add constraint FK88kw5i3dkvj127rs7houhldok foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration (indicator_configurations_id);
+alter table rsi_data add constraint FKiq1615px94v34wqhlwevtgqx5 foreign key (indicator_configuration_indicator_configurations_id) references indicator_configuration (indicator_configurations_id);
+

@@ -94,5 +94,8 @@ INSERT INTO exchange_bonds (exchanges_exchanges_id, bonds_bonds_id) VALUES
 (1, 2);
 
 INSERT INTO indicator (indicators_id, indicator_name, indicator_symbol, insert_timestamp, insert_user, modify_timestamp, modify_user) VALUES
-(1, 'MACD', 'macd', now(), 'admin', now(), 'admin'),
-(2, 'Bollinger Bänder', 'bollinger_bands', now(), 'admin', now(), 'admin');
+(1, 'MACD', 'MACD', now(), 'admin', now(), 'admin'),
+(2, 'Bollinger Bänder', 'BOLLINGER_BANDS', now(), 'admin', now(), 'admin'),
+(3, 'Average True Range', 'ATR', now(), 'admin', now(), 'admin'),
+(4, 'Average Directional Index', 'ADX', now(), 'admin', now(), 'admin'),
+(5, 'Relative Strength Index', 'RSI', now(), 'admin', now(), 'admin');

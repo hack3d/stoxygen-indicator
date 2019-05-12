@@ -2,6 +2,8 @@ package de.stoxygen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.nio.channels.FileLock;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class AggregatedBond {
@@ -103,8 +105,19 @@ public class AggregatedBond {
         this.modifyTimestamp = modifyTimestamp;
     }
 
-    public AggregatedBond() {
+    public AggregatedBond() {    }
 
+    public AggregatedBond(ZonedDateTime insertTimestamp, Float close) {
+        this.aggregated = false;
+        this.open = Float.valueOf(0);
+        this.close = close;
+        this.ask = Float.valueOf(0);
+        this.bid = Float.valueOf(0);
+        this.modifyTimestamp = new Date();
+        this.high = Float.valueOf(0);
+        this.low = Float.valueOf(0);
+        this.volume = Float.valueOf(0);
+        this.insertTimestamp = Date.from(insertTimestamp.toInstant());
     }
 
     @Override

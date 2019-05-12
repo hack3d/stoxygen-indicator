@@ -1,4 +1,6 @@
-package de.stoxygen.model;
+package de.stoxygen.model.indicator;
+
+import de.stoxygen.model.Auditable;
 
 import javax.persistence.*;
 
@@ -13,7 +15,8 @@ public class Indicator extends Auditable<String> {
     private String indicatorName;
 
     @Column(nullable = false)
-    private String indicatorSymbol;
+    @Enumerated(EnumType.STRING)
+    private IndicatorSymbol indicatorSymbol;
 
     public Indicator() {}
 
@@ -25,7 +28,7 @@ public class Indicator extends Auditable<String> {
         return indicatorName;
     }
 
-    public String getIndicatorSymbol() {
+    public IndicatorSymbol getIndicatorSymbol() {
         return indicatorSymbol;
     }
 
@@ -33,7 +36,7 @@ public class Indicator extends Auditable<String> {
         this.indicatorName = indicatorName;
     }
 
-    public void setIndicatorSymbol(String indicatorSymbol) {
+    public void setIndicatorSymbol(IndicatorSymbol indicatorSymbol) {
         this.indicatorSymbol = indicatorSymbol;
     }
 

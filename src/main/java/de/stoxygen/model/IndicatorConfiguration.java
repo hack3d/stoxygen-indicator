@@ -1,5 +1,6 @@
 package de.stoxygen.model;
 
+import de.stoxygen.model.indicator.Indicator;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

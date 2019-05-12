@@ -1,7 +1,6 @@
 package de.stoxygen.repository;
 
 import de.stoxygen.model.Bond;
-import de.stoxygen.model.Indicator;
 import de.stoxygen.model.IndicatorBondSetting;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

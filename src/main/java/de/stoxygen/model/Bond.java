@@ -52,4 +52,15 @@ public class Bond extends Auditable<String> {
         return cryptoPair;
     }
 
+    @Override
+    public String toString() {
+        return "Bond{" +
+                "bondsId=" + bondsId +
+                ", bondName='" + bondName + '\'' +
+                ", bondIsin='" + bondIsin + '\'' +
+                ", bondState=" + bondState +
+                ", cryptoPair='" + cryptoPair + '\'' +
+                ", exchanges=" + exchanges +
+                '}';
+    }
 }

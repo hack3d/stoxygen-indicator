@@ -1,4 +1,4 @@
-package de.stoxygen.model;
+package de.stoxygen.model.macd;
 
 import java.util.Date;
 

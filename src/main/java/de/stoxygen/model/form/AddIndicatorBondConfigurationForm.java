@@ -12,6 +12,13 @@ public class AddIndicatorBondConfigurationForm {
 
     private Integer bbAvg;
 
+    private Integer atrLength;
+
+    private Integer adxLength;
+
+    private Integer rsiLength;
+
+
     public AddIndicatorBondConfigurationForm() {  }
 
     public int getIndicatorsId() {
@@ -44,5 +51,42 @@ public class AddIndicatorBondConfigurationForm {
 
     public void setBbAvg(Integer bbAvg) {
         this.bbAvg = bbAvg;
+    }
+
+    public Integer getAtrLength() {
+        return atrLength;
+    }
+
+    public void setAtrLength(Integer atrLength) {
+        this.atrLength = atrLength;
+    }
+
+    public Integer getAdxLength() {
+        return adxLength;
+    }
+
+    public void setAdxLength(Integer adxLength) {
+        this.adxLength = adxLength;
+    }
+
+    public Integer getRsiLength() {
+        return rsiLength;
+    }
+
+    public void setRsiLength(Integer rsiLength) {
+        this.rsiLength = rsiLength;
+    }
+
+    @Override
+    public String toString() {
+        return "AddIndicatorBondConfigurationForm{" +
+                "indicatorsId=" + indicatorsId +
+                ", macdFast=" + macdFast +
+                ", macdSlow=" + macdSlow +
+                ", bbAvg=" + bbAvg +
+                ", atrLength=" + atrLength +
+                ", adxLength=" + adxLength +
+                ", rsiLength=" + rsiLength +
+                '}';
     }
 }

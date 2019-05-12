@@ -1,4 +1,7 @@
-package de.stoxygen.model;
+package de.stoxygen.model.macd;
+
+import de.stoxygen.model.Auditable;
+import de.stoxygen.model.IndicatorConfiguration;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -36,11 +39,12 @@ public class MacdData extends Auditable<String> {
         this.macdDataPoint = macdDataPoint;
     }
 
-    public MacdData(ZonedDateTime timestamp, Float macdDataPoint, IndicatorConfiguration indicatorConfiguration, String aggregate) {
+    public MacdData(ZonedDateTime timestamp, Float macdDataPoint, IndicatorConfiguration indicatorConfiguration, String aggregate, Float macdSignal) {
         this.macdDataPoint = macdDataPoint;
         this.timestamp = Date.from(timestamp.toInstant());
         this.indicatorConfiguration = indicatorConfiguration;
         this.aggregate = aggregate;
+        this.macdSignal = macdSignal;
     }
 
     public Date getTimestamp() {
@@ -77,5 +81,17 @@ public class MacdData extends Auditable<String> {
 
     public void setAggregate(String aggregate) {
         this.aggregate = aggregate;
+    }
+
+    @Override
+    public String toString() {
+        return "MacdData{" +
+                "macdDataId=" + macdDataId +
+                ", timestamp=" + timestamp +
+                ", macdSignal=" + macdSignal +
+                ", macdDataPoint=" + macdDataPoint +
+                ", aggregate='" + aggregate + '\'' +
+                ", indicatorConfiguration=" + indicatorConfiguration +
+                '}';
     }
 }

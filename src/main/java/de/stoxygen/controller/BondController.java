@@ -1,10 +1,11 @@
 package de.stoxygen.controller;
 
 import de.stoxygen.model.Bond;
-import de.stoxygen.model.Indicator;
+import de.stoxygen.model.indicator.Indicator;
 import de.stoxygen.model.IndicatorBondSetting;
 import de.stoxygen.model.IndicatorConfiguration;
 import de.stoxygen.model.form.AddIndicatorBondConfigurationForm;
+import de.stoxygen.model.indicator.IndicatorSymbol;
 import de.stoxygen.repository.BondRepository;
 import de.stoxygen.repository.IndicatorBondSettingRepository;
 import de.stoxygen.repository.IndicatorConfigurationRepository;
@@ -87,10 +88,7 @@ public class BondController {
             return "bonds";
         }
 
-        logger.debug("AddIndicatorBondConfigurationForm[Isin: {}, IndicatorsId: {}, macdFast: {}, macdSlow: {}, " +
-                "bbAvg: {}]", isin, addIndicatorBondConfigurationForm.getIndicatorsId(),
-                addIndicatorBondConfigurationForm.getMacdFast(), addIndicatorBondConfigurationForm.getMacdSlow(),
-                addIndicatorBondConfigurationForm.getBbAvg());
+        logger.debug("Isin: {}, {}", isin, addIndicatorBondConfigurationForm.toString());
 
         // Search for the indicator we selected
         Indicator indicator = indicatorRepository.findOne(addIndicatorBondConfigurationForm.getIndicatorsId());
@@ -107,7 +105,7 @@ public class BondController {
         Bond bond = bondRepository.findFirstByBondIsin(isin);
 
         // Now we decide which indicator we want to add
-        if(indicator.getIndicatorSymbol().equals("macd")) {
+        if(indicator.getIndicatorSymbol().equals(IndicatorSymbol.MACD)) {
             // MACD fast
             IndicatorBondSetting indicatorBondSetting = new IndicatorBondSetting();
             indicatorBondSetting.addBond(bond);
@@ -126,12 +124,39 @@ public class BondController {
 
         }
 
-        if(indicator.getIndicatorSymbol().equals("bollinger_bands")) {
+        if(indicator.getIndicatorSymbol().equals(IndicatorSymbol.BOLLINGER_BANDS)) {
             IndicatorBondSetting indicatorBondSetting = new IndicatorBondSetting();
             indicatorBondSetting.addBond(bond);
             indicatorBondSetting.addIndicatorConfiguration(indicatorConfiguration);
             indicatorBondSetting.setIndicatorKey("bbAvg");
             indicatorBondSetting.setIndicatorValue(addIndicatorBondConfigurationForm.getBbAvg().toString());
+            indicatorBondSettingRepository.save(indicatorBondSetting);
+        }
+
+        if(indicator.getIndicatorSymbol().equals(IndicatorSymbol.ATR)) {
+            IndicatorBondSetting indicatorBondSetting = new IndicatorBondSetting();
+            indicatorBondSetting.addBond(bond);
+            indicatorBondSetting.addIndicatorConfiguration(indicatorConfiguration);
+            indicatorBondSetting.setIndicatorKey("atrLength");
+            indicatorBondSetting.setIndicatorValue(addIndicatorBondConfigurationForm.getAtrLength().toString());
+            indicatorBondSettingRepository.save(indicatorBondSetting);
+        }
+
+        if(indicator.getIndicatorSymbol().equals(IndicatorSymbol.ADX)) {
+            IndicatorBondSetting indicatorBondSetting = new IndicatorBondSetting();
+            indicatorBondSetting.addBond(bond);
+            indicatorBondSetting.addIndicatorConfiguration(indicatorConfiguration);
+            indicatorBondSetting.setIndicatorKey("adxLength");
+            indicatorBondSetting.setIndicatorValue(addIndicatorBondConfigurationForm.getAdxLength().toString());
+            indicatorBondSettingRepository.save(indicatorBondSetting);
+        }
+
+        if(indicator.getIndicatorSymbol().equals(IndicatorSymbol.RSI)) {
+            IndicatorBondSetting indicatorBondSetting = new IndicatorBondSetting();
+            indicatorBondSetting.addBond(bond);
+            indicatorBondSetting.addIndicatorConfiguration(indicatorConfiguration);
+            indicatorBondSetting.setIndicatorKey("rsiLength");
+            indicatorBondSetting.setIndicatorValue(addIndicatorBondConfigurationForm.getRsiLength().toString());
             indicatorBondSettingRepository.save(indicatorBondSetting);
         }
 

@@ -18,6 +18,12 @@
             $('#inputMacdSlow').hide();
             $('#bbAvg').hide();
             $('#inputBbAvg').hide();
+            $('#atrLength').hide();
+            $('#inputAtrLength').hide();
+            $('#adxLength').hide();
+            $('#inputAdxLength').hide();
+            $('#rsiLength').hide();
+            $('#inputRsiLength').hide();
 
 
             $('select[name="indicatorsId"]').change(function() {
@@ -32,6 +38,12 @@
                     // disable
                     $('#bbAvg').hide();
                     $('#inputBbAvg').hide();
+                    $('#atrLength').hide();
+                    $('#inputAtrLength').hide();
+                    $('#adxLength').hide();
+                    $('#inputAdxLength').hide();
+                    $('#rsiLength').hide();
+                    $('#inputRsiLength').hide();
                 }
 
                 if($('select[name="indicatorsId"]').val() == "2") {
@@ -45,6 +57,69 @@
                     $('#inputMacdFast').hide();
                     $('#macdSlow').hide();
                     $('#inputMacdSlow').hide();
+                    $('#atrLength').hide();
+                    $('#inputAtrLength').hide();
+                    $('#adxLength').hide();
+                    $('#inputAdxLength').hide();
+                    $('#rsiLength').hide();
+                    $('#inputRsiLength').hide();
+                }
+
+                if($('select[name="indicatorsId"]').val() == "3") {
+                    // ATR
+                    // enable
+                    $('#atrLength').show();
+                    $('#inputAtrLength').show();
+
+                    // disable
+                    $('#macdFast').hide();
+                    $('#inputMacdFast').hide();
+                    $('#macdSlow').hide();
+                    $('#inputMacdSlow').hide();
+                    $('#bbAvg').hide();
+                    $('#inputBbAvg').hide();
+                    $('#adxLength').hide();
+                    $('#inputAdxLength').hide();
+                    $('#rsiLength').hide();
+                    $('#inputRsiLength').hide();
+                }
+
+                if($('select[name="indicatorsId"]').val() == "4") {
+                    // ADX
+                    // enable
+                    $('#adxLength').show();
+                    $('#inputAdxLength').show();
+
+                    // disable
+                    $('#macdFast').hide();
+                    $('#inputMacdFast').hide();
+                    $('#macdSlow').hide();
+                    $('#inputMacdSlow').hide();
+                    $('#bbAvg').hide();
+                    $('#inputBbAvg').hide();
+                    $('#atrLength').hide();
+                    $('#inputAtrLength').hide();
+                    $('#rsiLength').hide();
+                    $('#inputRsiLength').hide();
+                }
+
+                if($('select[name="indicatorsId"]').val() == "5") {
+                    // ADX
+                    // enable
+                    $('#rsiLength').show();
+                    $('#inputRsiLength').show();
+
+                    // disable
+                    $('#macdFast').hide();
+                    $('#inputMacdFast').hide();
+                    $('#macdSlow').hide();
+                    $('#inputMacdSlow').hide();
+                    $('#bbAvg').hide();
+                    $('#inputBbAvg').hide();
+                    $('#atrLength').hide();
+                    $('#inputAtrLength').hide();
+                    $('#adxLength').hide();
+                    $('#inputAdxLength').hide();
                 }
 
                 if($('select[name="indicatorsId"]').val() == "0") {
@@ -55,6 +130,12 @@
                     $('#inputMacdFast').hide();
                     $('#inputMacdSlow').hide();
                     $('#inputBbAvg').hide();
+                    $('#atrLength').hide();
+                    $('#inputAtrLength').hide();
+                    $('#adxLength').hide();
+                    $('#inputAdxLength').hide();
+                    $('#rsiLength').hide();
+                    $('#inputRsiLength').hide();
                 }
             });
         });
@@ -76,6 +157,8 @@
                 </select>
             </div>
         </div>
+
+        <!-- MACD -->
         <div id="macdFast" class="form-group row">
             <label for="inputMacdFast" class="col-2 col-form-label" th:text="#{inputMacdFast}">Text...</label>
             <div class="col-10">
@@ -88,10 +171,36 @@
                 <input type="text" class="form-control" id="inputMacdSlow" th:field="*{macdSlow}" />
             </div>
         </div>
+
+        <!-- Bollinger Bands -->
         <div id="bbAvg" class="form-group row">
             <label for="inputBbAvg" class="col-2 col-form-label" th:text="#{inputBbAvg}">Text...</label>
             <div class="col-10">
                 <input type="text" class="form-control" id="inputBbAvg" th:field="*{bbAvg}" />
+            </div>
+        </div>
+
+        <!-- ATR -->
+        <div id="atrLength" class="form-group row">
+            <label for="inputAtrLength" class="col-2 col-form-label" th:text="#{inputAtrLength}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputAtrLength" th:field="*{AtrLength}" />
+            </div>
+        </div>
+
+        <!-- ADX -->
+        <div id="adxLength" class="form-group row">
+            <label for="inputAdxLength" class="col-2 col-form-label" th:text="#{inputAdxLength}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputAdxLength" th:field="*{AdxLength}" />
+            </div>
+        </div>
+
+        <!-- RSI -->
+        <div id="rsiLength" class="form-group row">
+            <label for="inputRsiLength" class="col-2 col-form-label" th:text="#{inputRsiLength}">Text...</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="inputRsiLength" th:field="*{RsiLength}" />
             </div>
         </div>
         <button type="submit" class="btn btn-primary mb-2">Save</button>
